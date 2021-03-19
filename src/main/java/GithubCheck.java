@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class GithubCheck {
-    private static final String githubToken = "";
+    private static final String githubToken = "DUMMY_TOKEN";
 
     public static void main(String[] args) throws IOException {
         GithubApi gitHubApi = new GithubApi();
@@ -17,7 +17,6 @@ public class GithubCheck {
         List<GHIssue> allIssues = gitHubApi.getAllIssueList();
 
         for(GHIssue issue : allIssues) {
-            allDates.add(issue.getTitle());
             for(GHIssueComment comment : issue.getComments()) {
                 String userId = comment.getUser().getLogin();
                 String userName = comment.getUser().getName();
@@ -28,8 +27,10 @@ public class GithubCheck {
                         .findAny();
 
                 if(attendance.isEmpty()) {
+                    allDates.add(issue.getTitle());
                     userAttendanceCheck.add(new Attendance(userId, userName, new AttendanceDate(date, AttendanceStatus.ATTENDANCE)));
                 } else {
+                    allDates.add(issue.getTitle());
                     attendance.get().addAttendanceStatus(new AttendanceDate(date, AttendanceStatus.ATTENDANCE));
                 }
             }
